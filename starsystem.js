@@ -106,7 +106,7 @@ function setup() {
 function draw() {
   background(0, 0, 0, 0.3);
 
-  var mapZoom = map(zoomLevel, 0, 100, .1, 1.9);
+  var mapZoom = map(zoomLevel, 0, 100, .05, 1.95);
   var starZoom = map(zoomLevel, 0, 100, .9, 1.1);
 
   push();
@@ -143,10 +143,10 @@ function draw() {
           planet.showLite();
           planet.move()
         })
-        // solarsystem.forEach(planet => {
-        //   planet.show();
-        //   planet.move();
-        // })
+        solarsystem.forEach(planet => {
+          planet.show();
+          planet.move();
+        })
       }
   pop();
 }
