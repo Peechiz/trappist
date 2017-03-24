@@ -17,6 +17,8 @@ var zoomLevel;
 var origin;
 var mapZoom;
 
+var label;
+
 function setup() {
   var canvas = createCanvas(windowWidth, windowHeight * .75);
   canvas.parent("p5canvas");
@@ -33,11 +35,13 @@ function setup() {
   home = select('#home')
   home.mousePressed(function(){
     showHome = true;
+    label.html('Our Solar System')
   })
 
   trappist = select('#trappist')
   trappist.mousePressed(function(){
     showHome = false;
+    label.html('Trappist-1 System')
   })
 
   zoom = select('#zoom')
@@ -48,7 +52,7 @@ function setup() {
   rate = select('#rate')
   rate.input(function(){
     orbit_rate = map(this.value(), 0,100, .7,6)
-    console.log(orbit_rate);
+    // console.log(orbit_rate);
   })
 
 
@@ -101,12 +105,23 @@ function setup() {
     var star = new Star(x,y);
     stars.push(star);
   }
+
+  // -------------------------------------------
+  // -------- LABEL SETUP ------------------
+  // -------------------------------------------
+
+  label = createP('Trappist-1 System');
+  label.id('system')
+  var container = select('#container')
+  container.child('system')
+  label.position(10,10);
+
 }
 
 function draw() {
   background(0, 0, 0, 0.3);
 
-  mapZoom = map(zoomLevel, 0, 100, .005, 1.95);
+  mapZoom = map(zoomLevel, 0, 100, .002, 1.95);
   if (!mapZoom){
     mapZoom = .9775;
   }
