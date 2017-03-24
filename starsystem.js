@@ -1,17 +1,16 @@
-console.log('hello touchme!');
+console.log('hello trappist!');
 
 var t1a;
 var sun;
 var stars = [];
+var comets = [];
 var trappist;
 var solarsystem;
-var comets = [];
 
 var showHome = false;
 
 var rate;
-var orbit_rate = 5; // TODO attach this to a slider
-
+var orbit_rate = 5;
 
 var zoom;
 var zoomLevel;
@@ -139,6 +138,38 @@ function draw() {
           planet.show();
           planet.move()
         })
+
+        var hit;
+        var dead_index;
+        for (var i = comets.length -1; i >= 0; i--) {
+          comets[i].draw();
+
+          for (var j = 0; j < trappist.length; j++) {
+
+            if (comets[i]){
+              hit = collideCircleCircle(
+                comets[i].pos.x,
+                comets[i].pos.y,
+                10, // comet radius
+                trappist[j].pos.x,
+                trappist[j].pos.y,
+                trappist[j].r * 2
+              )
+
+
+              var f = trappist[j].gravity(comets[i]);
+              comets[i].apply(f);
+              if (hit) {
+                comets.splice(comets[i],1)
+              }
+            }
+          }
+
+          if (comets[i]){
+            comets[i].move();
+          }
+
+        }
         // solarsystem.forEach(planet => {
         //   planet.showLite();
         //   planet.move()
@@ -154,4 +185,19 @@ function draw() {
         })
       }
   pop();
+}
+
+// on click, make comets
+function mouseClicked(){
+  var x = touchX || mouseX
+  var y = touchY || mouseY
+
+  if (x >= 0 && x <= width && y>=0 && y <= height){
+    y -= height/2
+    x -= width/2
+
+    var c = new Comet(x,y);
+    comets.push(c);
+    // console.log('COMET!');
+  }
 }
