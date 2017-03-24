@@ -51,7 +51,7 @@ function setup() {
 
   rate = select('#rate')
   rate.input(function(){
-    orbit_rate = map(this.value(), 0,100, .7,6)
+    orbit_rate = map(this.value(), 0,100, 6,.7)
     // console.log(orbit_rate);
   })
 
@@ -155,11 +155,10 @@ function draw() {
         })
 
         var hit;
-        var dead_index;
         for (var i = comets.length -1; i >= 0; i--) {
           comets[i].draw();
 
-          for (var j = 0; j < trappist.length; j++) {
+          for (var j = trappist.length -1; j >= 0; j--) {
 
             if (comets[i]){
               hit = collideCircleCircle(
@@ -176,6 +175,7 @@ function draw() {
               comets[i].apply(f);
               if (hit) {
                 comets.splice(comets[i],1)
+                break;
               }
             }
           }
