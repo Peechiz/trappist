@@ -1,11 +1,12 @@
 function Planet(orbit_rate, dist,r, year, isEarth) {
   this.isEarth = isEarth;
-  this.angle = 0;
+  this.angle = random(360);
   this.year = year; // earth is 365.26 days
   this.origin = createVector(0,0)
   this.dist = map(dist, 0, .06, 0, height/2 -50);
   this.hue = random(360);
   this.r = map(r,0.76,1.13,5,25)
+  this._gravity = map(this.r * this.r, 25, 625, .005, .03);
 
   this.slide_r = function(scl){
     if (this.isEarth){
@@ -62,4 +63,14 @@ Planet.prototype.move = function() {
   var v = p5.Vector.fromAngle(radians(this.angle));
   var myangle = createVector(this.dist * v.x, this.dist * v.y);
   this.pos = myangle.add(this.origin)
+}
+
+Planet.prototype.gravity = function(comet){
+  var force = p5.Vector.sub(this.pos, comet.pos);
+  var d = force.mag();
+  d = constrain(d, 5, 25)
+  force.normalize();
+  var strength = this._gravity / d * d;
+  force.mult(strength);
+  return force;
 }
