@@ -8,15 +8,9 @@ function Planet(orbit_rate, dist,r, year, isEarth) {
   this.r = map(r,0.76,1.13,5,25)
   this._gravity = map(this.r * this.r, 25, 625, .005, .03);
 
-  this.slide_r = function(scl){
-    if (this.isEarth){
-      if (scl <= .66) {
-        var inv = map(scl, .005, .66, 3000, 1);
-        this.r = inv;
-      } else {
-        this.r = 100;
-      }
-    }
+  if (this.isEarth){
+    this.r *= 7;
+    constrain(this.r, 300, 2000)
   }
 
   var v = p5.Vector.fromAngle(radians(this.angle));
@@ -30,13 +24,11 @@ Planet.prototype.show = function(scl) {
   noFill();
   if (this.isEarth){
     stroke(360);
-    strokeWeight(2);
+    strokeWeight(10);
   } else {
     stroke(360, 0.2);
   }
   ellipse(this.origin.x, this.origin.y, this.dist * 2)
-
-  this.slide_r(scl);
 
   // planet
   fill(this.hue, 100,100);
