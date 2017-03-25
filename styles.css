@@ -64,10 +64,27 @@ label {
 
 #info {
   position: absolute;
+  justify-content: center;
+  align-items: center;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.6);
   display: none;
+}
+
+.ctn {
+  position: relative;
+  width: 50vh;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background-color: black;
+  border-radius: 7px;
+  border: 1px solid white;
+  padding: 1em;
+  color: rgb(240,240,240);
 }
