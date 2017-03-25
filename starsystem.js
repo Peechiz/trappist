@@ -18,6 +18,7 @@ var origin;
 var mapZoom;
 
 var label;
+var planet_label;
 
 function setup() {
   var canvas = createCanvas(windowWidth, windowHeight * .75);
@@ -66,29 +67,29 @@ function setup() {
 
 // ### TRAPPIST ###
 
-  // distance to star, radius, year in days
+  // name, orbit_rate, distance to star, radius, year in days
   t1a = new Sun(.117);
-  var t1b = new Planet(orbit_rate, .011, 1.09, 1.51);
-  var t1c = new Planet(orbit_rate, .015, 1.06, 2.42);
-  var t1d = new Planet(orbit_rate, .021, .77, 4.05);
-  var t1e = new Planet(orbit_rate, .028, .92, 6.10);
-  var t1r = new Planet(orbit_rate, .037, 1.04, 9.21);
-  var t1g = new Planet(orbit_rate, .045, 1.13, 12.35);
-  var t1h = new Planet(orbit_rate, .06, .76, 20);
+  var t1b = new Planet('Trappist-1b', orbit_rate, .011, 1.09, 1.51);
+  var t1c = new Planet('Trappist-1c', orbit_rate, .015, 1.06, 2.42);
+  var t1d = new Planet('Trappist-1d', orbit_rate, .021, .77, 4.05);
+  var t1e = new Planet('Trappist-1e', orbit_rate, .028, .92, 6.10);
+  var t1r = new Planet('Trappist-1r', orbit_rate, .037, 1.04, 9.21);
+  var t1g = new Planet('Trappist-1g', orbit_rate, .045, 1.13, 12.35);
+  var t1h = new Planet('Trappist-1h', orbit_rate, .06, .76, 20);
 
   trappist = [t1b,t1c,t1d,t1e,t1r,t1g,t1h]
 
 // ### "THE" SOLAR SYSTEM
 
   theSun = new Sun(origin, 110)
-  var mercury = new Planet(orbit_rate, .39, .382, 88, true);
-  var venus = new Planet(orbit_rate, .72, .949, 224, true);
-  var earth = new Planet(orbit_rate, 1, 1, 365.26, true);
-  var mars = new Planet(orbit_rate, 1.52, .532, 687, true);
-  var jupiter = new Planet(orbit_rate, 5.2, 11.209, 365*11.86, true);
-  var saturn = new Planet(orbit_rate, 9.54, 9.44, 365 * 29, true);
-  var uranus = new Planet(orbit_rate, 19.18, 4, 365 * 84, true);
-  var neptune = new Planet(orbit_rate, 30.06, 3.88, 365 * 164.8, true);
+  var mercury = new Planet('Mercury', orbit_rate, .39, .382, 88, true);
+  var venus = new Planet('Venus', orbit_rate, .72, .949, 224, true);
+  var earth = new Planet('Earth', orbit_rate, 1, 1, 365.26, true);
+  var mars = new Planet('Mars', orbit_rate, 1.52, .532, 687, true);
+  var jupiter = new Planet('Jupiter', orbit_rate, 5.2, 11.209, 365*11.86, true);
+  var saturn = new Planet('Saturn', orbit_rate, 9.54, 9.44, 365 * 29, true);
+  var uranus = new Planet('Uranus', orbit_rate, 19.18, 4, 365 * 84, true);
+  var neptune = new Planet('Neptune', orbit_rate, 30.06, 3.88, 365 * 164.8, true);
 
   solarsystem = [mercury, venus, earth, mars, jupiter, saturn, uranus, neptune];
 
@@ -111,12 +112,29 @@ function setup() {
   // -------------------------------------------
 
   label = createP('Trappist-1 System');
+  planet_label = createP('');
+  planet_label.id('planet');
   label.id('system')
   var container = select('#container')
   container.child('system')
+  container.child('planet')
   label.position(10,10);
+  planet_label.position(10,40);
 
 }
+
+
+
+
+
+
+
+// -------------------------------------------
+// -------------------------------------------
+// -------------- DRAW LOOP ------------------
+// -------------------------------------------
+// -------------------------------------------
+
 
 function draw() {
   background(0, 0, 0, 0.3);
@@ -151,7 +169,8 @@ function draw() {
       if (!showHome){
         trappist.forEach(planet => {
           planet.show();
-          planet.move()
+          displayLabel(planet, mapZoom);
+          planet.move();
         })
 
         var hit;
@@ -174,6 +193,7 @@ function draw() {
               var f = trappist[j].gravity(comets[i]);
               comets[i].apply(f);
               if (hit) {
+                trappist[j].hue = random(360);
                 comets.splice(comets[i],1)
                 break;
               }
@@ -190,12 +210,15 @@ function draw() {
         //   planet.move()
         // })
       } else {
+        planet_label.html('');
         trappist.forEach(planet => {
           planet.showLite();
           planet.move()
         })
         solarsystem.forEach(planet => {
           planet.show(mapZoom);
+          // displayLabel(planet);
+          // BUG: label doesn't display once zoom slider adjusted.
           planet.move();
         })
       }
@@ -216,3 +239,27 @@ function mouseClicked(){
     // console.log('COMET!');
   }
 }
+
+function displayLabel(planet, zoom) {
+  //collidePointCircle(pointX, pointY, circleX, circleY, diameter)
+
+  var mx = (mouseX  - width/2) / zoom
+  var my = (mouseY - height/2) / zoom
+
+  var hit = collidePointCircle(mx, my, planet.pos.x, planet.pos.y, planet.r * 2);
+
+  if (hit) {
+    planet_label.html(planet.name)
+  }
+}
+
+
+var infoBtn = document.querySelector('#infoBtn')
+var info = document.querySelector('#info')
+var noInfo = document.querySelector('#noInfo')
+infoBtn.addEventListener('click', function(){
+  info.style.display = 'flex'
+})
+noInfo.addEventListener('click', function(){
+  info.style.display = 'none'
+})
