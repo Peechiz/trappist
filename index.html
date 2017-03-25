@@ -21,18 +21,27 @@
       </div>
       <div class="buttons">
         <button id="trappist">TRAPPIST-1</button>
-        <button id="home">HOME</button>
+        <button id="home">SOLAR SYSTEM</button>
+        <button id="infoBtn">INFO</button>
       </div>
     </div>
   </div>
 
   <div id="info">
-    <p>Hello there.</p>
+    <div class="ctn">
+      <div>
+        <h1>Trappist-1</h1>
+        <p>In February 2017, NASA announced the discovery of a seven-planet system called TRAPPIST-1, just 39 light-years from our Sun. The system is particularly exciting, not only because of its proximity to our planet, but because it has three planets within the habitable zone, where liquid water (and potentially life) could be supported.</p>
+        <p>This simulation compares our solar system with Trappist-1. Sizes, rates of orbit, and distance to the sun are all vaguely to scale.</p>
+        <p><em>hint: try zooming out once you hit the Solar System button</em></p>
+      </div>
+      <button id="noInfo">Ok, Cool</button>
+    </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/p5.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/addons/p5.dom.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/addons/p5.sound.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/addons/p5.sound.min.js"></script> -->
   <script type="text/javascript">
     // left: 37, up: 38, right: 39, down: 40,
     // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
@@ -79,6 +88,7 @@
     disableScroll();
   </script>
   <script src="lib/p5.collide2d.js" type="text/javascript"></script>
+  <!-- <script src="range-touch.js" type="text/javascript"></script> -->
   <script src="planet.js" type="text/javascript"></script>
   <script src="star.js" type="text/javascript"></script>
   <script src="sun.js" type="text/javascript"></script>
