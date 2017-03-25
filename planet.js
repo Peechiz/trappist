@@ -1,4 +1,5 @@
-function Planet(orbit_rate, dist,r, year, isEarth) {
+function Planet(name, orbit_rate, dist,r, year, isEarth) {
+  this.name = name;
   this.isEarth = isEarth;
   this.angle = random(360);
   this.year = year; // earth is 365.26 days
@@ -10,7 +11,7 @@ function Planet(orbit_rate, dist,r, year, isEarth) {
 
   if (this.isEarth){
     this.r *= 7;
-    constrain(this.r, 300, 2000)
+    this.r = constrain(this.r, 300, 2000)
   }
 
   var v = p5.Vector.fromAngle(radians(this.angle));
@@ -34,6 +35,7 @@ Planet.prototype.show = function(scl) {
   fill(this.hue, 100,100);
   noStroke();
   ellipse(this.pos.x, this.pos.y, this.r * 2)
+
 }
 
 Planet.prototype.showLite = function() {
