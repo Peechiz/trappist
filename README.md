@@ -1,5 +1,5 @@
 # Trappist-1
-### A simulation of our new favorite *possibly inhabitable* starsystem
+### A simulation of our new favorite *possibly inhabitable* starsystem written with P5.js
 
 This project was completed as part of a class on [p5.js](https://p5js.org/) presented by [DadaGeek](http://www.dadageek.com/) and taught by [@jromeem](https://github.com/jromeem)
 
